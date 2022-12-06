@@ -33,15 +33,21 @@ st.set_page_config(layout="wide")
 col1, col2 = st.columns((2))
 
 #Input Data
-with st.form(key='Form1'):
-    with st.sidebar:
-        address = st.sidebar.text_input(
+address = st.sidebar.text_input(
             "Address", "123 Main Street, Cincinnati, OH 43215")
-        date = st.sidebar.date_input(
-            "Date",  pd.Timestamp(2022, 7, 6)).strftime('%Y%m%d')
-        var = st.sidebar.selectbox(
-            'Product:', ('Hail', 'Flooding', 'Rain: Radar', 'Rain: Multi Sensor', 'Tornado'))
-        submitted1 = st.form_submit_button(label='Go to MRMS Site')
+date = st.sidebar.date_input(
+"Date",  pd.Timestamp(2022, 7, 6)).strftime('%Y%m%d')
+
+var = st.sidebar.selectbox('Product:', ('Hail', 'Flooding', 'Rain: Radar', 'Rain: Multi Sensor', 'Tornado'))
+# with st.form(key='Form1'):
+#     with st.sidebar:
+#         address = st.sidebar.text_input(
+#             "Address", "123 Main Street, Cincinnati, OH 43215")
+#         date = st.sidebar.date_input(
+#             "Date",  pd.Timestamp(2022, 7, 6)).strftime('%Y%m%d')
+#         var = st.sidebar.selectbox(
+#             'Product:', ('Hail', 'Flooding', 'Rain: Radar', 'Rain: Multi Sensor', 'Tornado'))
+#         submitted1 = st.form_submit_button(label='Go to MRMS Site')
 
 year, month, day = date[:4], date[4:6], date[6:]
 
@@ -67,16 +73,24 @@ folium.Marker(
     location=[lat, lon],
     popup=address).add_to(m)
 
-with col1:
-    st.title('MRMS')
-    st_folium(m, height=500)
-
 #Submit Url to New Tab
 url = f'https://mrms.nssl.noaa.gov/qvs/product_viewer/index.php?web_exec_mode=run&menu=menu_config.txt&year={year}&month={month}&day={day}&hour=23&minute=30&time_mode=static&zoom=9&clon={lon}&clat={lat}&base=0&overlays=1&mping_mode=0&product_type={var_input}&qpe_pal_option=0&opacity=.75&looping_active=off&num_frames=6&frame_step=200&seconds_step=600'
-if submitted1 == True:
-    webbrowser.open_new_tab(url)
+
+# if submitted1 == True:
+#     webbrowser.open_new_tab(url)
+    
+with col1:
+    st.title('MRMS')
+    link = f'[Click Link]({url})'
+    st.markdown(link, unsafe_allow_html=True)
+    st_folium(m, height=500)
+    
 
 st.markdown(""" <style>
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 </style> """, unsafe_allow_html=True)
+
+
+
+
