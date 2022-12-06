@@ -81,7 +81,7 @@ url = f'https://mrms.nssl.noaa.gov/qvs/product_viewer/index.php?web_exec_mode=ru
     
 with col1:
     st.title('MRMS')
-    link = f'[Click Link]({url})'
+    link = f'[Go To MRMS Site]({url})'
     st.markdown(link, unsafe_allow_html=True)
     st_folium(m, height=500)
     
